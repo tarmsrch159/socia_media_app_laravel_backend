@@ -25,7 +25,6 @@ $app = Application::configure(basePath: dirname(__DIR__))
         // WEB
         $middleware->web(append: [
             HandleAppearance::class,
-            HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
 
