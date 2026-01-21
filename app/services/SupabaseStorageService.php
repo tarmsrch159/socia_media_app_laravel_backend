@@ -6,7 +6,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
-class SupabaseStorageService
+class SupabaseStorageService 
 {
     public function upload(
         UploadedFile $file,
