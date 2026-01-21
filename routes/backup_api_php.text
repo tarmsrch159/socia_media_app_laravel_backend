@@ -1,0 +1,91 @@
+<?php
+
+use App\Http\Controllers\Api\LikeController;
+use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\FollowController;
+use App\Http\Controllers\Api\AuthUserController;
+use App\Http\Controllers\Api\CommentsController;
+use App\Http\Controllers\Api\NotificationController;
+
+
+
+/**
+ * Post Route
+ */
+Route::get('posts', [PostController::class, 'index']);
+Route::post('create/user', [PostController::class, 'store']);
+
+
+/**
+ * User Route
+ */
+Route::get('/users/search', [UserController::class, 'search']);
+
+
+
+/**
+ * Comment Route
+ */
+Route::get('/posts/{post}/comments', [CommentsController::class, 'index']);
+Route::post('/posts/{post}/add-comment', [CommentsController::class, 'store']);
+
+/**
+ * Reset password Route
+ */
+Route::post('/forgot-password', [AuthUserController::class, 'forgotPassword']);
+Route::post('/reset-password', [AuthUserController::class, 'resetPassword']);
+
+Route::middleware('auth:sanctum')->group(function () {
+       Route::post('user/logout', [UserController::class, 'logout']);
+       Route::get('/users/{name}', [UserController::class, 'show']);
+       /**
+        * Post Auth Route
+        */
+       Route::get('/posts/{id}', [PostController::class, 'show']);
+       /**
+        * Like Route
+        */
+       Route::post('/posts/{post}/like', [LikeController::class, 'toggle']);
+
+
+       /**
+        * Profile Route
+        */
+       Route::post('/user/update-image', [UserController::class, 'updateProfile']);
+       Route::post('/user/update-cover-image', [UserController::class, 'updateProfile']);
+       Route::put('/user/update-profile', [UserController::class, 'updateProfile']);
+       Route::get('/users/{id}/posts', [PostController::class, 'getPostsByUser']);
+
+       /**
+        * Post Route
+        */
+       Route::post('/post/postByuser', [PostController::class, 'store']);
+
+
+
+
+       /**
+        * Notification Route
+        */
+       Route::get('/notifications', [NotificationController::class, 'index']);
+       Route::get('/notifications/unread', [NotificationController::class, 'unread']);
+       Route::post('/notifications/read/{id}', [NotificationController::class, 'markAsRead']);
+       Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead']);
+
+       /**
+        * Follow Route
+        */
+       Route::post('/users/{user}/follow', [FollowController::class, 'follow']);
+       Route::delete('/users/{user}/delete', [FollowController::class, 'unfollow']);
+       Route::get('/me/followings', [FollowController::class, 'myFollowings']);
+       Route::get('/me/followers', [FollowController::class, 'myFollowers']);
+       Route::get('/users/', [UserController::class, 'index']);
+});
+
+/**
+ * User Route
+ */
+Route::post('user/register', [UserController::class, 'store']);
+Route::post('user/login', [UserController::class, 'auth']);

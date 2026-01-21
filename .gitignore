@@ -1,0 +1,35 @@
+# ===== Core =====
+/vendor
+/node_modules
+
+# ===== Environment =====
+.env
+.env.*
+!.env.example
+
+# ===== Storage (uploads, cache, logs) =====
+/storage/app/public
+/storage/logs
+/storage/framework
+/storage/*.key
+
+# ===== Build =====
+/public/build
+/public/hot
+
+# ===== Cache =====
+/bootstrap/cache/*.php
+.phpunit.result.cache
+
+# ===== IDE / OS =====
+.DS_Store
+.idea
+.vscode
+.fleet
+.nova
+.zed
+
+# ===== Logs =====
+npm-debug.log
+yarn-error.log
+*.log
