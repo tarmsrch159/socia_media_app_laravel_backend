@@ -20,9 +20,8 @@ class SupabaseStorageService
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . config('services.supabase.service_key'),
             'apikey' => config('services.supabase.service_key'),
-            'Content-Type' => $file->getMimeType(),
         ])->withBody(
-            fopen($file->getRealPath(), 'r'),
+            file_get_contents($file->getRealPath()),
             $file->getMimeType()
         )->post(
             config('services.supabase.url')
@@ -51,3 +50,5 @@ class SupabaseStorageService
         );
     }
 }
+
+
