@@ -1,18 +1,20 @@
 FROM php:8.4-cli
 
 RUN apt-get update && apt-get install -y \
-    git unzip libpq-dev libzip-dev \
- && docker-php-ext-install pdo pdo_pgsql fileinfo
+    git unzip libpq-dev \
+ && docker-php-ext-install pdo pdo_pgsql
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
+# copy source
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader \
- && php artisan optimize:clear
+# install deps
+RUN composer install --no-dev --optimize-autoloader
 
+# 🔥 FIX จริงอยู่ตรงนี้
 RUN mkdir -p \
     storage/framework/views \
     storage/framework/cache \
